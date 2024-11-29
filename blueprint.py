@@ -71,7 +71,7 @@ def load_bp():
     def solutions_api(challenge_id):
         if request.method == 'GET':
             if is_admin():
-                data = Solutions.query.filter_by(id=challenge_id, state!="hidden").first_or_404()
+                data = Solutions.query.filter(Solutions.id == challenge_id, Solutions.state != "hidden").first_or_404()
                 if data:
                     solution_html = markup(build_markdown(data.solution))
                     return {"success": True, "data": {"id": data.id,

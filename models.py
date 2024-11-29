@@ -9,8 +9,3 @@ class Solutions(db.Model):
     solution = db.Column(db.Text)
     state = db.Column(db.String(80), nullable=False, default="visible")
 
-    def register():
-       pass
-
-    def disconnect():
-        pass

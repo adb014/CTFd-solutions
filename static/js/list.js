@@ -65,6 +65,7 @@ function bulkEditChallenges(_event) {
           <option value="">--</option>
           <option value="visible">Visible</option>
           <option value="solved">Solved</option>
+          <option value="admin">Admin Only</option>
           <option value="hidden">Hidden</option>
         </select>
       </div>
@@ -82,8 +83,14 @@ function bulkEditChallenges(_event) {
           }),
         );
       }
-
-
+      for (var chalID of challengeIDs) {
+        reqs.push(
+          CTFd.fetch(`/api/v1/solutions/${chalID}`, {
+            method: "PATCH",
+            body: JSON.stringify(data),
+          }),
+        );
+      }
       Promise.all(reqs).then((_responses) => {
         window.location.reload();
       });

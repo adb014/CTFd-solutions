@@ -100,7 +100,7 @@
                         <option value="visible" {% if solution.state == "visible" %}selected{% endif %}>Visible</option>
                         <option value="solved" {% if solution.state == "solved" %}selected{% endif %}>Solved</option>
                         <option value="admin" {% if solution.state == "admin" %}selected{% endif %}>Admin Only</option>
-                        <option value="hidden" {% if not solution.state == "hidden" %}selected{% endif %}>Hidden</option>
+                        <option value="hidden" {% if solution.state == "hidden" %}selected{% endif %}>Hidden</option>
                 </select>
         </div>
         {% endblock %}
