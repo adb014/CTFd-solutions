@@ -115,7 +115,11 @@ def load_bp():
             data = Solutions.query.filter_by(id=challenge_id).first()
             req = request.get_json()
             if not data:
-                return {"success": False, "errors": "Solution not found"}, 404
+                # There is no solution text for this change yet. Create it
+                data = Solutions(id=challenge_id, solution="", state = "hidden")
+                db.session.add(data)
+                db.session.commit()
+                db.session.flush()
             if "solution" in req:
                 data.solution = req["solution"]
             if "solution_state" in req:
