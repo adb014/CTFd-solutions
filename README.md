@@ -13,7 +13,7 @@ This plugin allows the CTFd adminsitrator to include solutions in their challeng
 5. Click on the challenge desired and you can add a solution in markdown, including images, and mark the visibility of the solution to the users. Possible values include
     - `Hidden` : The solution is completely hidden on the challenge modal screen
     - `Admin Only` : Only users with the adminsitrator role are capable of seeing the solutions
-    - `Solved` : Administrators and users qho have solved the challenge can see the user
+    - `Solved` : Administrators and users who have solved the challenge can see the solution
     - `Visible` : All users can see the solution
 
 ## Screenshots
