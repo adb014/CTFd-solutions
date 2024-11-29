@@ -24,7 +24,7 @@ function deleteSelectedChallenges(_event) {
             method: "DELETE",
           }),
         );
-      }   
+      }
       Promise.all(reqs).then((_responses) => {
         window.location.reload();
       });
@@ -67,7 +67,7 @@ function bulkEditChallenges(_event) {
           <option value="solved">Solved</option>
           <option value="hidden">Hidden</option>
         </select>
-      </div>      
+      </div>
     </form>
     `),
     button: "Submit",
@@ -82,7 +82,7 @@ function bulkEditChallenges(_event) {
           }),
         );
       }
-      
+
 
       Promise.all(reqs).then((_responses) => {
         window.location.reload();

@@ -25,7 +25,7 @@ def update_challenge_template(app):
         with open(injecting_file_path, 'r') as f:
             injecting = f.read()
         original = original[:pos] + injecting + original[pos:]
-        
+
     match = re.search('<div role="tabpanel" class="tab-pane fade" id="solves">', original)
     if match:
         pos = match.start()
@@ -34,7 +34,7 @@ def update_challenge_template(app):
             injecting = f.read()
         original = original[:pos] + injecting + original[pos:]
     override_template('challenge.html', original)
-        
+
     original = app.jinja_loader.get_source(environment, 'challenges.html')[0]
     match = re.search('{% block scripts %}', original)
     if match:
@@ -42,11 +42,11 @@ def update_challenge_template(app):
         injecting_file_path = os.path.join(PLUGIN_PATH, 'templates/solution_script.html')
         with open(injecting_file_path, 'r') as f:
             injecting = f.read()
-        original = original[:pos+19] + injecting + original[pos+19:]        
+        original = original[:pos+19] + injecting + original[pos+19:]
 
     override_template('challenges.html', original)
-    
-    
+
+
 def load(app):
     # Create database tables
     app.db.create_all()
@@ -54,7 +54,7 @@ def load(app):
     # Update /challenge/<id> template to include the ability to include
     # solution text
     update_challenge_template(app)
-    
+
     # Register the blueprint containing the routes
     bp = load_bp()
     app.register_blueprint(bp)

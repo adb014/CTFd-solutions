@@ -88,7 +88,7 @@
                 <textarea id="solution-editor" class="form-control chal-desc-editor markdown" name="solution" rows="20">{{ solution.solution }}</textarea>
         </div>
         {% endblock %}
-        
+
         {% block state %}
         <div class="form-group">
                 <label>
@@ -99,6 +99,7 @@
                 <select class="form-control custom-select" name="solution_state">
                         <option value="visible" {% if solution.state == "visible" %}selected{% endif %}>Visible</option>
                         <option value="solved" {% if solution.state == "solved" %}selected{% endif %}>Solved</option>
+                        <option value="admin" {% if solution.state == "admin" %}selected{% endif %}>Admin Only</option>
                         <option value="hidden" {% if not solution.state == "hidden" %}selected{% endif %}>Hidden</option>
                 </select>
         </div>

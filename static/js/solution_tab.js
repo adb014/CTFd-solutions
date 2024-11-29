@@ -17,7 +17,7 @@ async function setupSolution(id) {
   });
 }
 
-async function showSolution() {  
+async function showSolution() {
   // Can't access bootstrap here, so do what "Tab($this).show()" would have done
   // Only called for core-beta theme
   let vals = document.getElementById("solution-tab").parentElement.getElementsByClassName("nav-link");
@@ -34,7 +34,7 @@ async function showSolution() {
 
 try {
   // JQuery version used by the core theme
-  $(document).on('shown.bs.modal','#challenge-window', (event) => { 
+  $(document).on('shown.bs.modal','#challenge-window', (event) => {
     id = document.getElementById("solution-tab").getAttribute("value");
     setupSolution(id);
   });

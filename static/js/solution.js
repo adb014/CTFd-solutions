@@ -11,7 +11,7 @@ $("#solution-update-container > form").submit(function (event) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(params),
-  }).then((response) => { 
+  }).then((response) => {
     return response.json();
   }).then((response) => {
     if (response.success) {

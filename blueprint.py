@@ -44,7 +44,7 @@ def load_bp():
             q=q,
             field=field,
         )
-        
+
     @plugin_bp.route('/admin/solutions/<int:challenge_id>')
     @admins_only
     def solutions_detail(challenge_id):
@@ -63,21 +63,21 @@ def load_bp():
             challenge_html=markup(build_markdown(challenge.description)),
             solution=solution,
         )
-        
+
     # Overload of /api/v1/challenges/<int:challenge_id>, treat solution
-    # specific deletion and hand off the rest to the existing function 
+    # specific deletion and hand off the rest to the existing function
     @plugin_bp.route("/api/v1/solutions/<int:challenge_id>", methods = ['GET', 'DELETE', 'PATCH', 'POST'])
     @check_challenge_visibility
     def solutions_api(challenge_id):
         if request.method == 'GET':
             if is_admin():
-                data = Solutions.query.filter_by(id=challenge_id).first_or_404()
+                data = Solutions.query.filter_by(id=challenge_id, state!="hidden").first_or_404()
                 if data:
                     solution_html = markup(build_markdown(data.solution))
                     return {"success": True, "data": {"id": data.id,
                                               "solution": data.solution,
                                               "solution_html": solution_html,
-                                              "state": data.state}}                    
+                                              "state": data.state}}
                 else:
                     return {"success": False}
             else:
@@ -101,7 +101,7 @@ def load_bp():
                     return {"success": False}
         if not is_admin():
             return {"success": False, "errors": "Permission denied"}, 400
-        
+
         if request.method == 'DELETE':
             data = Solutions.query.filter_by(id=challenge_id).first_or_404()
             if data:
@@ -123,6 +123,8 @@ def load_bp():
                     data.state = "visible"
                 elif req["solution_state"] == "solved":
                     data.state = "solved"
+                elif req["solution_state"] == "admin":
+                    data.state = "admin"
                 else:
                     data.state = "hidden"
             else:
@@ -148,24 +150,26 @@ def load_bp():
                     data.state = "visible"
                 elif req["solution_state"] == "solved":
                     data.state = "solved"
+                elif req["solution_state"] == "admin":
+                    data.state = "admin"
                 else:
                     data.state = "hidden"
             else:
-                data.data = "hidden"    
+                data.data = "hidden"
             solution_html = markup(build_markdown(solution.solution))
             db.session.commit()
             db.session.flush()
             return {"success": True, "data": {"id": data.id,
                                               "solution": data.solution,
                                               "solution_html": solution_html,
-                                              "state": data.state}}   
+                                              "state": data.state}}
         else:
             return {"success": False, "errors": "Permission denied"}, 400
-    
+
     return plugin_bp
-            
-            
-        
+
+
+
 
 
 
