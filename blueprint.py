@@ -38,7 +38,7 @@ def load_bp():
                 challenge.solution_state = "hidden"
 
         return render_template(
-            "list.html",
+            "solution_list.html",
             challenges=challenges,
             total=total,
             q=q,
