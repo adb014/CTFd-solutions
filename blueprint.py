@@ -3,7 +3,6 @@ from flask import Blueprint, redirect, render_template, request, url_for
 from CTFd.models import Challenges, Solves, db
 from CTFd.utils.config.pages import build_markdown
 from CTFd.utils.decorators import admins_only
-from CTFd.utils.decorators.visibility import check_challenge_visibility
 from CTFd.utils.helpers import markup
 from CTFd.utils.logging import log
 from CTFd.utils.user import is_admin, get_current_user
@@ -67,11 +66,15 @@ def load_bp():
     # Overload of /api/v1/challenges/<int:challenge_id>, treat solution
     # specific deletion and hand off the rest to the existing function
     @plugin_bp.route("/api/v1/solutions/<int:challenge_id>", methods = ['GET', 'DELETE', 'PATCH', 'POST'])
-    @check_challenge_visibility
     def solutions_api(challenge_id):
         if request.method == 'GET':
             if is_admin():
-                data = Solutions.query.filter(Solutions.id == challenge_id, Solutions.state != "hidden").first_or_404()
+                if request.args.get("view") == "admin":
+                    # Admins can request to see the solution regardless of visibility
+                    data = Solutions.query.filter(Solutions.id == challenge_id).first()
+                else:
+                    data = Solutions.query.filter(Solutions.id == challenge_id, Solutions.state != "hidden").first()
+
                 if data:
                     solution_html = markup(build_markdown(data.solution))
                     return {"success": True, "data": {"id": data.id,
